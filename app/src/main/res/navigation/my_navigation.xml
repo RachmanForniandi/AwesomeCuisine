@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="rachmanforniandi.awesomecuisine.RecipesFragment"
+        android:name="rachmanforniandi.awesomecuisine.ui.fragments.RecipesFragment"
         android:label="Recipes"
         tools:layout="@layout/fragment_recipes" />
 
     <fragment
         android:id="@+id/favoriteRecipesFragment"
-        android:name="rachmanforniandi.awesomecuisine.FavoriteRecipesFragment"
+        android:name="rachmanforniandi.awesomecuisine.ui.fragments.FavoriteRecipesFragment"
         android:label="Favorite Recipes"
         tools:layout="@layout/fragment_favorite_recipes" />
 
     <fragment
         android:id="@+id/foodJokeFragment"
-        android:name="rachmanforniandi.awesomecuisine.FoodJokeFragment"
+        android:name="rachmanforniandi.awesomecuisine.ui.fragments.FoodJokeFragment"
         android:label="Food Joke"
         tools:layout="@layout/fragment_food_joke" />
 </navigation>
