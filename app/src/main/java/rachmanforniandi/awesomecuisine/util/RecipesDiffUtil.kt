@@ -5,18 +5,18 @@ import rachmanforniandi.awesomecuisine.models.Result
 class RecipesDiffUtil (private val oldList: List<Result>,
 private val newList:List<Result>):DiffUtil.Callback(){
     override fun getOldListSize(): Int {
-        TODO("Not yet implemented")
+        return oldList.size
     }
 
     override fun getNewListSize(): Int {
-        TODO("Not yet implemented")
+        return newList.size
     }
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        TODO("Not yet implemented")
+        return oldList[oldItemPosition]=== newList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        TODO("Not yet implemented")
+        return oldList[oldItemPosition]== newList[newItemPosition]
     }
 }

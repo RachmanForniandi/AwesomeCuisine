@@ -2,11 +2,13 @@ package rachmanforniandi.awesomecuisine.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import rachmanforniandi.awesomecuisine.databinding.ItemRecipesBinding
 import rachmanforniandi.awesomecuisine.databinding.RecipesRowLayoutBinding
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
 import rachmanforniandi.awesomecuisine.models.Result
+import rachmanforniandi.awesomecuisine.util.RecipesDiffUtil
 
 class RecipesAdapter: RecyclerView.Adapter<RecipesAdapter.RecipesHolder>() {
     private var recipes = emptyList<Result>()
@@ -41,8 +43,10 @@ class RecipesAdapter: RecyclerView.Adapter<RecipesAdapter.RecipesHolder>() {
     }
 
     fun setData(newData:FoodRecipe){
+        val recipesDiffUtil = RecipesDiffUtil(recipes,newData.results)
+        val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
-        notifyDataSetChanged()
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 
 
