@@ -2,13 +2,13 @@ package rachmanforniandi.awesomecuisine.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import rachmanforniandi.awesomecuisine.networkUtils.Constants
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_API_KEY
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_DIET
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_FILL_INGREDIENTS
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_NUMBER
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.QUERY_TYPE
+import rachmanforniandi.awesomecuisine.util.Constants
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_API_KEY
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_DIET
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_FILL_INGREDIENTS
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_NUMBER
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_TYPE
 
 class RecipesViewModel(application: Application) : AndroidViewModel(application) {
 

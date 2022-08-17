@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.database
+package rachmanforniandi.awesomecuisine.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

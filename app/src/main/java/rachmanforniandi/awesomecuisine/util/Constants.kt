@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.networkUtils
+package rachmanforniandi.awesomecuisine.util
 
 class Constants {
 

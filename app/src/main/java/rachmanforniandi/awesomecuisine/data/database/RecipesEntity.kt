@@ -1,10 +1,9 @@
-package rachmanforniandi.awesomecuisine.database
+package rachmanforniandi.awesomecuisine.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
-import rachmanforniandi.awesomecuisine.networkUtils.Constants
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.RECIPES_TABLE
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPES_TABLE
 
 @Entity(tableName = RECIPES_TABLE)
 class RecipesEntity (var foodRecipe: FoodRecipe){

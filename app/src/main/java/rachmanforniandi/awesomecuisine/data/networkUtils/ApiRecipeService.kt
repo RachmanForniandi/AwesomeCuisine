@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.networkUtils
+package rachmanforniandi.awesomecuisine.data.networkUtils
 
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
 import retrofit2.Response

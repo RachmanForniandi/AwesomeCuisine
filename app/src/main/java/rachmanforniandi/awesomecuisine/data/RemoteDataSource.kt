@@ -1,7 +1,7 @@
-package rachmanforniandi.awesomecuisine.di
+package rachmanforniandi.awesomecuisine.data
 
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
-import rachmanforniandi.awesomecuisine.networkUtils.ApiRecipeService
+import rachmanforniandi.awesomecuisine.data.networkUtils.ApiRecipeService
 import retrofit2.Response
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.database
+package rachmanforniandi.awesomecuisine.data.database
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
