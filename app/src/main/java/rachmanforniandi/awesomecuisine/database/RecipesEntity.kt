@@ -8,6 +8,7 @@ import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.RECIPES_
 
 @Entity(tableName = RECIPES_TABLE)
 class RecipesEntity (var foodRecipe: FoodRecipe){
+
     @PrimaryKey(autoGenerate = false)
     var id:Int =0
 }
