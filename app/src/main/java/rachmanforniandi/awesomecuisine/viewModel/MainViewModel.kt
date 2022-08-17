@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +16,11 @@ import rachmanforniandi.awesomecuisine.util.NetworkResult
 import retrofit2.Response
 import java.lang.Exception
 
+
 class MainViewModel @ViewModelInject constructor(
-    private val repository: Repository, application: Application):AndroidViewModel(application) {
+    private val repository: Repository,
+    application: Application
+):AndroidViewModel(application) {
 
     var recipesResponse :MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
 
@@ -30,6 +34,7 @@ class MainViewModel @ViewModelInject constructor(
             try {
                 val response = repository.remote.getRecipesData(queries)
                 recipesResponse.value = handledFoodRecipesResponse(response)
+
             }catch (e:Exception){
                 recipesResponse.value =NetworkResult.Error("Recipes not found.")
             }
@@ -38,7 +43,7 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun handledFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe>? {
+    private fun handledFoodRecipesResponse(response: Response<FoodRecipe>): NetworkResult<FoodRecipe> {
         when{
             response.message().toString().contains("timeout")->{
                 return NetworkResult.Error("Timeout")
@@ -49,6 +54,10 @@ class MainViewModel @ViewModelInject constructor(
             response.body()?.results.isNullOrEmpty() ->{
                 val recipesData = response.body()
                 return NetworkResult.Success(recipesData)
+            }
+            response.isSuccessful -> {
+                val foodRecipes = response.body()
+                return NetworkResult.Success(foodRecipes)
             }
             else->{
                 return NetworkResult.Error(response.message())

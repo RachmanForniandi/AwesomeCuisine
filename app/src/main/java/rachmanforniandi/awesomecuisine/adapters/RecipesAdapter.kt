@@ -15,11 +15,11 @@ class RecipesAdapter: RecyclerView.Adapter<RecipesAdapter.RecipesHolder>() {
 
     class RecipesHolder (private val binding: RecipesRowLayoutBinding):
         RecyclerView.ViewHolder(binding.root){
+
         fun bind(result: Result) {
             binding.result = result
             binding.executePendingBindings()
         }
-
 
         companion object {
             fun from(parent: ViewGroup): RecipesHolder {

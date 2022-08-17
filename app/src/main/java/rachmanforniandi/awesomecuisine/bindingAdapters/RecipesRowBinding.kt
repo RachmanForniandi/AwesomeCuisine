@@ -5,11 +5,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import coil.load
 import rachmanforniandi.awesomecuisine.R
 
 class RecipesRowBinding {
 
     companion object{
+
+        @BindingAdapter("loadImageUrl")
+        @JvmStatic
+        fun loadImageUrl(imageView: ImageView,imgUrl:String){
+            imageView.load(imgUrl){
+                crossfade(600)
+            }
+        }
         @BindingAdapter("setNumberOfLikes")
         @JvmStatic
         fun setNumberOfLikes(textView: TextView,likes:Int){
@@ -28,7 +37,8 @@ class RecipesRowBinding {
             if (vegan){
                 when(view){
                     is TextView->{
-                        view.setTextColor(ContextCompat.getColor(view.context, R.color.green))
+                        view.setTextColor(
+                            ContextCompat.getColor(view.context, R.color.green))
                     }
                     is ImageView->{
                         view.setColorFilter(ContextCompat.getColor(view.context, R.color.green))
