@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
+import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
 import rachmanforniandi.awesomecuisine.util.NetworkResult
@@ -40,13 +42,30 @@ class RecipesFragment : Fragment() {
         mView =inflater.inflate(R.layout.fragment_recipes, container, false)
 
         setupRecyclerviewRecipesData()
-        requestApiData()
+        //requestApiData()
+        readDatabase()
 
         //Log.e("testApi",""+requestApiData())
         return mView
     }
 
+    private fun readDatabase(){
+        lifecycleScope.launch {
+            mainViewModel.readRecipesLocal.observe(viewLifecycleOwner,{ database->
+                if (database.isNotEmpty()){
+                    Log.d("recipesFragment","readDatabase called!")
+                    adapter.setData(database[0].foodRecipe)
+                    hideShimmerEffect()
+                }else{
+                    requestApiData()
+                }
+            })
+        }
+
+    }
+
     private fun requestApiData(){
+        Log.d("recipesFragment","request api data called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner,{
             response->
@@ -57,6 +76,7 @@ class RecipesFragment : Fragment() {
                 }
                 is NetworkResult.Error->{
                     hideShimmerEffect()
+                    loadDataFromCache()
                     Toast.makeText(requireContext(),
                         response.message.toString()
                         ,Toast.LENGTH_SHORT).show()
@@ -68,6 +88,15 @@ class RecipesFragment : Fragment() {
         })
     }
 
+    private fun loadDataFromCache(){
+        lifecycleScope.launch {
+            mainViewModel.readRecipesLocal.observe(viewLifecycleOwner,{ database ->
+                if (database.isNotEmpty()){
+                    adapter.setData(database[0].foodRecipe)
+                }
+            })
+        }
+    }
 
 
     private fun setupRecyclerviewRecipesData(){
