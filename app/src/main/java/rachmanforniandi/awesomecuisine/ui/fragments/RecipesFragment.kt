@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
 import rachmanforniandi.awesomecuisine.util.NetworkResult
+import rachmanforniandi.awesomecuisine.util.observeOnce
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
 import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 
@@ -51,7 +52,7 @@ class RecipesFragment : Fragment() {
 
     private fun readDatabase(){
         lifecycleScope.launch {
-            mainViewModel.readRecipesLocal.observe(viewLifecycleOwner,{ database->
+            mainViewModel.readRecipesLocal.observeOnce(viewLifecycleOwner,{ database->
                 if (database.isNotEmpty()){
                     Log.d("recipesFragment","readDatabase called!")
                     adapter.setData(database[0].foodRecipe)
