@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.fragment_recipes.view.*
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
+import rachmanforniandi.awesomecuisine.databinding.FragmentRecipesBinding
 import rachmanforniandi.awesomecuisine.util.NetworkResult
 import rachmanforniandi.awesomecuisine.util.observeOnce
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
@@ -23,10 +24,13 @@ import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
+    private var _binding:FragmentRecipesBinding?= null
+    private val binding get() = _binding!!
+
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private val adapter by lazy { RecipesAdapter() }
-    private lateinit var mView:View
+    //private lateinit var mView:View
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,14 +44,17 @@ class RecipesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        mView =inflater.inflate(R.layout.fragment_recipes, container, false)
+        //mView =inflater.inflate(R.layout.fragment_recipes, container, false)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner= this
+        binding.mainViewModel = mainViewModel
 
         setupRecyclerviewRecipesData()
         //requestApiData()
         readDatabase()
 
         //Log.e("testApi",""+requestApiData())
-        return mView
+        return binding.root
     }
 
     private fun readDatabase(){
@@ -101,17 +108,22 @@ class RecipesFragment : Fragment() {
 
 
     private fun setupRecyclerviewRecipesData(){
-        mView.list_item_recipe.adapter = adapter
-        mView.list_item_recipe.layoutManager = LinearLayoutManager(requireContext())
+        binding.listItemRecipe.adapter = adapter
+        binding.listItemRecipe.layoutManager = LinearLayoutManager(requireContext())
         showShimmerEffect()
     }
 
     private fun showShimmerEffect(){
-        mView.list_item_recipe.showShimmer()
+        binding.listItemRecipe.showShimmer()
     }
 
     private fun hideShimmerEffect(){
-        mView.list_item_recipe.hideShimmer()
+        binding.listItemRecipe.hideShimmer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding =null
     }
 
 }
