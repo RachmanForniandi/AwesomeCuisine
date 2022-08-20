@@ -9,7 +9,11 @@
         android:id="@+id/recipesFragment"
         android:name="rachmanforniandi.awesomecuisine.ui.fragments.RecipesFragment"
         android:label="Recipes"
-        tools:layout="@layout/fragment_recipes" />
+        tools:layout="@layout/fragment_recipes" >
+        <action
+            android:id="@+id/action_recipesFragment_to_recipesBottomSheetFragment"
+            app:destination="@id/recipesBottomSheetFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/favoriteRecipesFragment"
@@ -22,4 +26,13 @@
         android:name="rachmanforniandi.awesomecuisine.ui.fragments.FoodJokeFragment"
         android:label="Food Joke"
         tools:layout="@layout/fragment_food_joke" />
+    <dialog
+        android:id="@+id/recipesBottomSheetFragment"
+        android:name="rachmanforniandi.awesomecuisine.ui.fragments.RecipesBottomSheetFragment"
+        android:label="fragment_recipes_bottom_sheet"
+        tools:layout="@layout/fragment_recipes_bottom_sheet" >
+        <action
+            android:id="@+id/action_recipesBottomSheetFragment_to_recipesFragment"
+            app:destination="@id/recipesFragment" />
+    </dialog>
 </navigation>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
@@ -52,6 +53,10 @@ class RecipesFragment : Fragment() {
         setupRecyclerviewRecipesData()
         //requestApiData()
         readDatabase()
+
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheetFragment)
+        }
 
         //Log.e("testApi",""+requestApiData())
         return binding.root
