@@ -86,7 +86,6 @@ class RecipesFragment : Fragment(),androidx.appcompat.widget.SearchView.OnQueryT
             }
 
         }
-
         //Log.e("testApi",""+requestApiData())
         return binding.root
     }
