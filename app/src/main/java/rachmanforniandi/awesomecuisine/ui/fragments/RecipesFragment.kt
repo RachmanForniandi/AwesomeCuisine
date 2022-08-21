@@ -144,6 +144,11 @@ class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
         })
     }
 
+    private fun searchApiData(searchQuery:String){
+        showShimmerEffect()
+
+    }
+
     private fun loadDataFromCache(){
         lifecycleScope.launch {
             mainViewModel.readRecipesLocal.observe(viewLifecycleOwner,{ database ->
