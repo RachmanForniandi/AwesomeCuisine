@@ -2,10 +2,9 @@ package rachmanforniandi.awesomecuisine.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +26,7 @@ import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
 import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class RecipesFragment : Fragment() {
+class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
 
     private val args by navArgs<RecipesFragmentArgs>()
 
@@ -57,6 +56,8 @@ class RecipesFragment : Fragment() {
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         binding.lifecycleOwner= this
         binding.mainViewModel = mainViewModel
+
+        setHasOptionsMenu(true)
 
         setupRecyclerviewRecipesData()
         //requestApiData()
@@ -90,6 +91,20 @@ class RecipesFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipes_menu, menu)
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as SearchView
+        searchView.isSubmitButtonEnabled = true
+        searchView.setOnQueryTextListener(this)
+    }
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        return true
+    }
     private fun readDatabase(){
         lifecycleScope.launch {
             mainViewModel.readRecipesLocal.observeOnce(viewLifecycleOwner,{ database->
@@ -158,5 +173,7 @@ class RecipesFragment : Fragment() {
         super.onDestroy()
         _binding =null
     }
+
+
 
 }
