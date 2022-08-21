@@ -14,15 +14,18 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_recipes.view.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
 import rachmanforniandi.awesomecuisine.databinding.FragmentRecipesBinding
+import rachmanforniandi.awesomecuisine.util.NetworkListener
 import rachmanforniandi.awesomecuisine.util.NetworkResult
 import rachmanforniandi.awesomecuisine.util.observeOnce
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
 import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
-
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
@@ -34,6 +37,8 @@ class RecipesFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private val adapter by lazy { RecipesAdapter() }
+    private lateinit var networkListener: NetworkListener
+
     //private lateinit var mView:View
 
 
@@ -55,10 +60,30 @@ class RecipesFragment : Fragment() {
 
         setupRecyclerviewRecipesData()
         //requestApiData()
-        readDatabase()
+        //readDatabase()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner,{
+            recipesViewModel.backOnline = it
+        })
+
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(requireActivity())
+                .collect { status->
+                    Log.d("NetworkListener",status.toString())
+                    recipesViewModel.networkStatus = status
+                    recipesViewModel.showNetworkStatus()
+                    readDatabase()
+                }
+        }
 
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheetFragment)
+            if (recipesViewModel.networkStatus){
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheetFragment)
+            }else{
+                recipesViewModel.showNetworkStatus()
+            }
+
         }
 
         //Log.e("testApi",""+requestApiData())
