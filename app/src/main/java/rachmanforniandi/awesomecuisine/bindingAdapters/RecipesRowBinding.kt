@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import coil.load
+import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.ui.fragments.RecipesFragmentDirections
@@ -66,6 +67,15 @@ class RecipesRowBinding {
                         view.setColorFilter(ContextCompat.getColor(view.context, R.color.green))
                     }
                 }
+            }
+        }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(txt:TextView,description:String?){
+            if (description !=null){
+                val desc = Jsoup.parse(description).text()
+                txt.text = desc
             }
         }
     }

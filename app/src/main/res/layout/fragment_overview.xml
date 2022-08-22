@@ -187,7 +187,7 @@
         app:tint="@color/darkGray" />
 
     <TextView
-        android:id="@+id/healthy_textView"
+        android:id="@+id/tv_healthy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -5,29 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import coil.load
+import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
+import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
+import rachmanforniandi.awesomecuisine.models.Result
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [OverviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class OverviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private lateinit var binding: FragmentOverviewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -35,26 +25,56 @@ class OverviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_overview, container, false)
+        binding = FragmentOverviewBinding.inflate(inflater,container,false)
+        //return inflater.inflate(R.layout.fragment_overview, container, false)
+
+        val args = arguments
+        val myBundle:Result? = args?.getParcelable("recipeBundle")
+
+        binding.imgMainOverview.load(myBundle?.image)
+        binding.tvTitleRecipe.text = myBundle?.title
+        binding.tvLikes.text = myBundle?.aggregateLikes.toString()
+        binding.tvTime.text = myBundle?.readyInMinutes.toString()
+        //binding.tvSummary.text = myBundle?.summary
+        myBundle?.summary.let {
+            val summary = Jsoup.parse(it).text()
+            binding.tvSummary.text = summary
+        }
+
+        if (myBundle?.vegetarian == true){
+            binding.imgVegetarian.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvVegetarian.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+        if (myBundle?.vegan == true){
+            binding.imgVegan.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvVegan.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+        if (myBundle?.glutenFree == true){
+            binding.imgGlutenFree.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvGlutenFree.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+        if (myBundle?.dairyFree == true){
+            binding.imgDairyFree.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvDairyFree.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+        if (myBundle?.veryHealthy == true){
+            binding.imgHealthy.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvHealthy.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+        if (myBundle?.cheap ==true){
+            binding.imgCheap.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            binding.tvCheap.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
+        }
+
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment OverviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            OverviewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
