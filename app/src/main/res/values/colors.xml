@@ -45,6 +45,7 @@
     <color name="contextualActionBarColor">@color/dark</color>
     <color name="actionBarBackgroundColor">@color/colorPrimary</color>
 
+
     // Custom BottomNavigationView Style
     <color name="bottomNavBackground">@color/white</color>
     <color name="bottomNavItemColor">@color/darkGray</color>
