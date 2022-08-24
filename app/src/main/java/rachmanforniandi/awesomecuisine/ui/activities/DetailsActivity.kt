@@ -16,6 +16,7 @@ import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KE
 
 class DetailsActivity : AppCompatActivity() {
     private val args by navArgs<DetailsActivityArgs>()
+
     private lateinit var binding:ActivityDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
