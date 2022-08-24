@@ -11,6 +11,8 @@ import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
 import rachmanforniandi.awesomecuisine.models.Result
+import rachmanforniandi.awesomecuisine.util.Constants
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 
 
 class OverviewFragment : Fragment() {
@@ -29,7 +31,7 @@ class OverviewFragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_overview, container, false)
 
         val args = arguments
-        val myBundle:Result? = args?.getParcelable("recipeBundle")
+        val myBundle:Result? = args?.getParcelable(RECIPE_RESULT_KEY)
 
         binding.imgMainOverview.load(myBundle?.image)
         binding.tvTitleRecipe.text = myBundle?.title

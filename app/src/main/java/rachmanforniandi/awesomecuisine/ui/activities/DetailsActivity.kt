@@ -12,6 +12,7 @@ import rachmanforniandi.awesomecuisine.databinding.ActivityDetailsBinding
 import rachmanforniandi.awesomecuisine.ui.fragments.IngredientsFragment
 import rachmanforniandi.awesomecuisine.ui.fragments.InstructionsFragment
 import rachmanforniandi.awesomecuisine.ui.fragments.OverviewFragment
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 
 class DetailsActivity : AppCompatActivity() {
     private val args by navArgs<DetailsActivityArgs>()
@@ -38,7 +39,7 @@ class DetailsActivity : AppCompatActivity() {
         titles.add("Instructions")
 
         val resultBundle = Bundle()
-        resultBundle.putParcelable("recipeBundle",args.result)
+        resultBundle.putParcelable(RECIPE_RESULT_KEY,args.result)
 
         val adapter = PagerAdapter(resultBundle,fragments,titles,supportFragmentManager)
         binding.viewPagerDetails.adapter = adapter
