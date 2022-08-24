@@ -1,66 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lightGray"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.RecipesFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <com.todkars.shimmer.ShimmerRecyclerView
-        android:id="@+id/list_item_recipe"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="vertical"
-        app:shimmer_recycler_item_count="3"
-        app:shimmer_recycler_layout="@layout/placholder_item_recipe"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
+    <data>
+        <variable
+            name="mainViewModel"
+            type="rachmanforniandi.awesomecuisine.viewModel.MainViewModel" />
+    </data>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:src="@drawable/ic_restaurant"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
+        tools:context=".ui.fragments.RecipesFragment">
 
-    <ImageView
-        android:id="@+id/img_error"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:alpha="0.5"
-        android:contentDescription="@string/image_error"
-        android:src="@drawable/ic_sad"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- TODO: Update blank fragment layout -->
+        <!-- <com.facebook.shimmer.ShimmerFrameLayout
+             android:id="@+id/shimmerFrameLayout"
+             android:layout_width="0dp"
+             android:layout_height="0dp"
+             app:layout_constraintBottom_toBottomOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/txt_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:alpha="0.5"
-        android:text="@string/no_internet_connection"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@id/img_error"
-        app:layout_constraintStart_toStartOf="@id/img_error"
-        app:layout_constraintTop_toBottomOf="@id/img_error" />
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                 <include layout="@layout/placeholder_row_layout" />
+
+                 <include layout="@layout/placeholder_row_layout" />
+
+                 <include layout="@layout/placeholder_row_layout" />
+
+                 <include layout="@layout/placeholder_row_layout" />
+             </LinearLayout>
+         </com.facebook.shimmer.ShimmerFrameLayout>-->
+
+        <!--<androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_item_recipe"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_recipes"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>-->
+
+        <com.todkars.shimmer.ShimmerRecyclerView
+            android:id="@+id/listItemRecipe"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:shimmer_recycler_item_count="3"
+            app:shimmer_recycler_layout="@layout/placeholder_row_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/recipes_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:src="@drawable/ic_restaurant"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/img_error"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:alpha="0.5"
+            android:contentDescription="@string/image_error"
+            android:src="@drawable/ic_sad"
+            android:visibility="invisible"
+            readApiResponse="@{mainViewModel.recipesResponse}"
+            readDatabase="@{mainViewModel.readRecipesLocal}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/listItemRecipe"
+            app:layout_constraintVertical_bias="0.37"
+            />
+
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:alpha="0.5"
+            android:text="@string/no_internet_connection"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            readApiResponseForText="@{mainViewModel.recipesResponse}"
+            readDatabaseForText="@{mainViewModel.readRecipesLocal}"
+            app:layout_constraintEnd_toEndOf="@id/img_error"
+            app:layout_constraintStart_toStartOf="@id/img_error"
+            app:layout_constraintTop_toBottomOf="@id/img_error" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

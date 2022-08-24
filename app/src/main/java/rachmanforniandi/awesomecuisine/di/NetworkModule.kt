@@ -3,20 +3,18 @@ package rachmanforniandi.awesomecuisine.di
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
-import rachmanforniandi.awesomecuisine.networkUtils.ApiRecipeService
-import rachmanforniandi.awesomecuisine.networkUtils.Constants.Companion.BASE_URL
+import rachmanforniandi.awesomecuisine.data.networkUtils.ApiRecipeService
+import rachmanforniandi.awesomecuisine.util.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ApplicationComponent::class)
 object NetworkModule {
-
 
     @Singleton
     @Provides
@@ -39,6 +37,13 @@ object NetworkModule {
             .addConverterFactory(gsonConverterFactory)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
+    }
+
     @Singleton
     @Provides
     fun provideApiService(retrofit: Retrofit):ApiRecipeService{

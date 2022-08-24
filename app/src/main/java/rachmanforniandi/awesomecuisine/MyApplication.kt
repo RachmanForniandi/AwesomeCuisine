@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.di
+package rachmanforniandi.awesomecuisine
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
