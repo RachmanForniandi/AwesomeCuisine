@@ -2,7 +2,7 @@ package rachmanforniandi.awesomecuisine.data
 
 import kotlinx.coroutines.flow.Flow
 import rachmanforniandi.awesomecuisine.data.database.RecipesDao
-import rachmanforniandi.awesomecuisine.data.database.RecipesEntity
+import rachmanforniandi.awesomecuisine.data.database.entities.RecipesEntity
 import javax.inject.Inject
 
 class LocalDataSource @Inject constructor(

@@ -4,12 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import rachmanforniandi.awesomecuisine.data.database.RecipesEntity
+import rachmanforniandi.awesomecuisine.data.database.entities.RecipesEntity
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
 import rachmanforniandi.awesomecuisine.repo.Repository
 import rachmanforniandi.awesomecuisine.util.NetworkResult
