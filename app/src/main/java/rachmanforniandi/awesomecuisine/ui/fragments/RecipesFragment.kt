@@ -26,7 +26,7 @@ import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
 import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class RecipesFragment : Fragment(),androidx.appcompat.widget.SearchView.OnQueryTextListener {
+class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
 
     private val args by navArgs<RecipesFragmentArgs>()
 

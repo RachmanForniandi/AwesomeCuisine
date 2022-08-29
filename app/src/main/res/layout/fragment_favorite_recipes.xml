@@ -7,7 +7,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.FavoriteRecipesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_favorite_recipe"
         android:layout_width="match_parent"
@@ -19,7 +18,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        android:visibility="invisible"/>
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_recipes_favorite"/>
 
     <ImageView
         android:id="@+id/img_no_fav_recipe"
@@ -32,16 +33,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.37"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
     <TextView
         android:id="@+id/txt_no_favorited"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="No Favorite Recipes Yet"
+        android:text="@string/no_favorite_recipes"
+        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/img_no_fav_recipe"
         app:layout_constraintEnd_toEndOf="@id/img_no_fav_recipe"
         app:layout_constraintTop_toBottomOf="@id/img_no_fav_recipe"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
