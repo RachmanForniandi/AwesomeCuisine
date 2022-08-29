@@ -10,6 +10,7 @@ import rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity
 
 class FavoritesRecipesBinding {
     companion object {
+
         @BindingAdapter("viewVisibility", "setData", requireAll = false)
         @JvmStatic
         fun setDataAndViewVisibility(

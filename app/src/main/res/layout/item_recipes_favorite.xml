@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
         <variable
             name="favoritesEntity"
             type="rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@{favoritesEntity.result.summary}"
+                    parseHtml="@{favoritesEntity.result.summary}"
                     tools:text="@string/dummy_word"
                     android:maxLines="3"
                     android:ellipsize="end"
