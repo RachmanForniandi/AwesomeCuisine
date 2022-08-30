@@ -21,7 +21,7 @@ import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 class FavoriteRecipesFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
-    private val mAdapter by lazy { FavoriteRecipesAdapter() }
+    private val mAdapter by lazy { FavoriteRecipesAdapter(requireActivity()) }
 
     private var _binding: FragmentFavoriteRecipesBinding? = null
     private val binding get() = _binding!!
