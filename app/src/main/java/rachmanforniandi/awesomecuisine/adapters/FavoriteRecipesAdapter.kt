@@ -61,6 +61,7 @@ class FavoriteRecipesAdapter(private val requireActivity: FragmentActivity): Rec
 
     override fun onCreateActionMode(actionMode: ActionMode?, menu: Menu?): Boolean {
         actionMode?.menuInflater?.inflate(R.menu.favorites_contextual_menu,menu)
+        applyStatusBarColor(R.color.contextualStatusBarColor)
         return true
     }
 
@@ -73,7 +74,7 @@ class FavoriteRecipesAdapter(private val requireActivity: FragmentActivity): Rec
     }
 
     override fun onDestroyActionMode(mode: ActionMode?) {
-
+        applyStatusBarColor(R.color.statusBarColor)
     }
 
     private fun applyStatusBarColor(color:Int){
