@@ -166,4 +166,10 @@ private val mainViewModel: MainViewModel): RecyclerView.Adapter<FavoriteRecipesA
         ).setAction("Okay"){}
             .show()
     }
+
+    fun clearContextualActionMode(){
+        if (this::mActionMode.isInitialized){
+            mActionMode.finish()
+        }
+    }
 }
