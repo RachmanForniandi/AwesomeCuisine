@@ -11,7 +11,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/favRecipesMainLayout"
+        android:id="@+id/favRecipesRowLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -19,7 +19,7 @@
         >
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/row_recipes"
+            android:id="@+id/row_recipes_fav"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
