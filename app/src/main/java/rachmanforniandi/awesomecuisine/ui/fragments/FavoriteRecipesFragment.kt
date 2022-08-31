@@ -1,13 +1,13 @@
 package rachmanforniandi.awesomecuisine.ui.fragments
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.FavoriteRecipesAdapter
 import rachmanforniandi.awesomecuisine.databinding.FragmentFavoriteRecipesBinding
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
@@ -40,6 +40,26 @@ class FavoriteRecipesFragment : Fragment() {
 
     private fun setupRecyclerFav(listFavorite: RecyclerView) {
         listFavorite.adapter = mAdapter
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.favorite_recipes_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.deleteAll_favorite_recipes_menu){
+            mainViewModel.deleteAllFavoriteRecipesData()
+            showSnackBar()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+    private fun showSnackBar(){
+        Snackbar.make(
+            binding.root,
+            "All recipes removed",
+            Snackbar.LENGTH_SHORT
+        ).setAction("Okay"){}
+            .show()
     }
 
     override fun onDestroy() {
