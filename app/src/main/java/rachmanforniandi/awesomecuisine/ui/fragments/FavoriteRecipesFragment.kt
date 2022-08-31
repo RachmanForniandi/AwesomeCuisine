@@ -8,20 +8,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_favorite_recipes.*
-import kotlinx.android.synthetic.main.fragment_favorite_recipes.view.*
-import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.FavoriteRecipesAdapter
-import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
 import rachmanforniandi.awesomecuisine.databinding.FragmentFavoriteRecipesBinding
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
-import rachmanforniandi.awesomecuisine.viewModel.RecipesViewModel
 
 @AndroidEntryPoint
 class FavoriteRecipesFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModels()
-    private val mAdapter by lazy { FavoriteRecipesAdapter(requireActivity()) }
+    private val mAdapter by lazy { FavoriteRecipesAdapter(requireActivity(),mainViewModel) }
 
     private var _binding: FragmentFavoriteRecipesBinding? = null
     private val binding get() = _binding!!
