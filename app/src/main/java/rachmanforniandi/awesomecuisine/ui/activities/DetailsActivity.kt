@@ -64,7 +64,7 @@ class DetailsActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?):Boolean {
         menuInflater.inflate(R.menu.details_menu, menu)
         val menuItem = menu?.findItem(R.id.save_to_favorites_menu)
-        menuItem?.let { checkedSavedRecipes(it) }
+        menuItem?.let { checkSavedRecipes(it) }
         return true
     }
 
@@ -79,14 +79,14 @@ class DetailsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun checkedSavedRecipes(item: MenuItem) {
+    private fun checkSavedRecipes(item: MenuItem) {
         mainViewModel.readFavoriteRecipes.observe(this,{ favoritesEntity->
             try {
                 for (savedRecipe in favoritesEntity){
                     if (savedRecipe.result.recipeId == args.result.recipeId){
                         changeMenuItemColor(item,R.color.yellow)
                         savedRecipeId = savedRecipe.id
-                        recipeSaved =true
+                        recipeSaved = true
                     }else{
                         changeMenuItemColor(item,R.color.white)
                     }
@@ -113,8 +113,8 @@ class DetailsActivity : AppCompatActivity() {
         recipeSaved = false
     }
 
-    private fun showSnackBar(msg: String) {
-        Snackbar.make(detailsLayout,msg,Snackbar.LENGTH_SHORT)
+    private fun showSnackBar(message: String) {
+        Snackbar.make(detailsLayout,message,Snackbar.LENGTH_SHORT)
             .setAction("Okay"){}
             .show()
     }
