@@ -42,6 +42,9 @@ class FoodJokeFragment : Fragment() {
             when(response){
                 is NetworkResult.Success->{
                     binding.tvFoodJoke.text = response.data?.text
+                    if(response.data != null){
+                        foodJoke = response.data.text
+                    }
                 }
                 is NetworkResult.Error->{
                     loadDataFromCache()

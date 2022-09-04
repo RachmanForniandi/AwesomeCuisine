@@ -16,10 +16,13 @@
         tools:context=".ui.fragments.FoodJokeFragment">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mCd_foodJoke"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            readDataOnlineFoodJoke="@{mainViewModel.foodJokeResponse}"
+            readDataLocalFoodJoke="@{mainViewModel.readFoodJokeLocal}"
             app:cardCornerRadius="8dp"
             app:strokeWidth="1dp"
             android:visibility="visible"
@@ -56,7 +59,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
+            readDataOnlineFoodJoke="@{mainViewModel.foodJokeResponse}"
             android:visibility="invisible"
+            style="?android:attr/progressBarStyle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -66,6 +71,9 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_sad"
+            android:visibility="invisible"
+            readDataOnlineFoodJoke2="@{mainViewModel.foodJokeResponse}"
+            readDataLocalFoodJoke2="@{mainViewModel.readFoodJokeLocal}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,10 +85,13 @@
             android:id="@+id/tv_error_food_joke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            readDataOnlineFoodJoke2="@{mainViewModel.foodJokeResponse}"
+            readDataLocalFoodJoke2="@{mainViewModel.readFoodJokeLocal}"
             android:text="Error"
             android:alpha="0.5"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/img_error_food_joke"
             app:layout_constraintStart_toStartOf="@id/img_error_food_joke"
             app:layout_constraintEnd_toEndOf="@id/img_error_food_joke" />
