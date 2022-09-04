@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import rachmanforniandi.awesomecuisine.data.database.RecipesEntity
+import rachmanforniandi.awesomecuisine.data.database.entities.RecipesEntity
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
 import rachmanforniandi.awesomecuisine.util.NetworkResult
 

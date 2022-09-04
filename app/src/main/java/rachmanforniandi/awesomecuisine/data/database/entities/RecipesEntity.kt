@@ -1,4 +1,4 @@
-package rachmanforniandi.awesomecuisine.data.database
+package rachmanforniandi.awesomecuisine.data.database.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
