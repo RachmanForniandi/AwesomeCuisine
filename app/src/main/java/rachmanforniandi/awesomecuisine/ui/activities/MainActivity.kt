@@ -1,5 +1,6 @@
 package rachmanforniandi.awesomecuisine.ui.activities
 
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_AwesomeCuisine)
         setContentView(R.layout.activity_main)
 
         navController = findNavController(R.id.navHostFragment)
