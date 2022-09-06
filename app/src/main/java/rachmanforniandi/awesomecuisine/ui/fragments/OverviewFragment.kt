@@ -11,21 +11,18 @@ import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
 import rachmanforniandi.awesomecuisine.models.Result
-import rachmanforniandi.awesomecuisine.util.Constants
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 
 
 class OverviewFragment : Fragment() {
-    private lateinit var binding: FragmentOverviewBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
+    private lateinit var binding: FragmentOverviewBinding
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater,container,false)
         //return inflater.inflate(R.layout.fragment_overview, container, false)
@@ -72,9 +69,6 @@ class OverviewFragment : Fragment() {
             binding.imgCheap.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
             binding.tvCheap.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
         }
-
-
-
 
         return binding.root
     }

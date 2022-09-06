@@ -17,15 +17,10 @@ class IngredientsFragment : Fragment() {
     private lateinit var binding:FragmentIngredientsBinding
     private val adapter:IngredientsAdapter by lazy { IngredientsAdapter() }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentIngredientsBinding.inflate(inflater,container,false)
 

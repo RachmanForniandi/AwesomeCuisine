@@ -2,7 +2,6 @@ package rachmanforniandi.awesomecuisine.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.databinding.FragmentRecipesBottomSheetBinding
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.DEFAULT_DIET_TYPE
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -40,7 +38,7 @@ class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentRecipesBottomSheetBinding.inflate(inflater,container,false)
         //return inflater.inflate(R.layout.fragment_recipes_bottom_sheet, container, false)

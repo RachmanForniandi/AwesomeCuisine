@@ -11,8 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
-import rachmanforniandi.awesomecuisine.adapters.FavoriteRecipesAdapter
-import rachmanforniandi.awesomecuisine.databinding.FragmentFavoriteRecipesBinding
 import rachmanforniandi.awesomecuisine.databinding.FragmentFoodJokeBinding
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.API_KEY
 import rachmanforniandi.awesomecuisine.util.NetworkResult

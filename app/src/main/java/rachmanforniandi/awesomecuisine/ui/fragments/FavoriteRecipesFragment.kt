@@ -24,7 +24,7 @@ class FavoriteRecipesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentFavoriteRecipesBinding.inflate(inflater,container,false)
         binding.lifecycleOwner = this
@@ -62,8 +62,8 @@ class FavoriteRecipesFragment : Fragment() {
             .show()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
         mAdapter.clearContextualActionMode()
     }
