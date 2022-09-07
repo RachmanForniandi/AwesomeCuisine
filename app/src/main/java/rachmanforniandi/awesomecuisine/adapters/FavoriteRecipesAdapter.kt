@@ -68,8 +68,8 @@ private val mainViewModel: MainViewModel): RecyclerView.Adapter<FavoriteRecipesA
                 applySelection(holder,currentRecipe)
                 true
             }else{
-                multiSelection = false
-                false
+                applySelection(holder,currentRecipe)
+                true
             }
 
         }
@@ -99,6 +99,7 @@ private val mainViewModel: MainViewModel): RecyclerView.Adapter<FavoriteRecipesA
         when(selectedRecipes.size){
             0->{
                 mActionMode.finish()
+                multiSelection = false
             }
             1->{
                 mActionMode.title = "${selectedRecipes.size} item selected"
