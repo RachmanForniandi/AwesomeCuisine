@@ -3,6 +3,7 @@ package rachmanforniandi.awesomecuisine.bindingAdapters
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import rachmanforniandi.awesomecuisine.data.database.entities.RecipesEntity
 import rachmanforniandi.awesomecuisine.models.FoodRecipe
@@ -14,18 +15,20 @@ class RecipesBinding {
 
         @BindingAdapter("readApiResponse","readDatabase", requireAll = true)
         @JvmStatic
-        fun errorImageViewVisibility(imageView: ImageView,apiResponse:NetworkResult<FoodRecipe>?,
+        fun handleReadDataErrors(view: View,apiResponse:NetworkResult<FoodRecipe>?,
         database:List<RecipesEntity>?) {
-            if (apiResponse is NetworkResult.Error && database.isNullOrEmpty()) {
-                imageView.visibility = View.VISIBLE
-            } else if (apiResponse is NetworkResult.Loading) {
-                imageView.visibility = View.INVISIBLE
-            } else if (apiResponse is NetworkResult.Success) {
-                imageView.visibility = View.INVISIBLE
+            when(view){
+                is ImageView->{
+                    view.isVisible =apiResponse is NetworkResult.Error && database.isNullOrEmpty()
+                }
+                is TextView->{
+                    view.isVisible =apiResponse is NetworkResult.Error && database.isNullOrEmpty()
+                    view.text = apiResponse?.message.toString()
+                }
             }
         }
 
-        @BindingAdapter("readApiResponseForText","readDatabaseForText", requireAll = true)
+        /*@BindingAdapter("readApiResponseForText","readDatabaseForText", requireAll = true)
         @JvmStatic
         fun errorTextViewVisibility(textView: TextView, apiResponse:NetworkResult<FoodRecipe>?,
                                     database:List<RecipesEntity>?) {
@@ -37,6 +40,6 @@ class RecipesBinding {
             } else if (apiResponse is NetworkResult.Success) {
                 textView.visibility = View.INVISIBLE
             }
-        }
+        }*/
     }
 }

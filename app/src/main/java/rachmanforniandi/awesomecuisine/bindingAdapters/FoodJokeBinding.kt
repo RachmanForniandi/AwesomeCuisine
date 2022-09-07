@@ -18,7 +18,8 @@ class FoodJokeBinding {
         fun setCardAndProgressVisibility(
             view: View,
             apiResponse:NetworkResult<FoodJoke>?,
-            db:List<FoodJokeEntity>?){
+            db:List<FoodJokeEntity>?
+        ){
             when(apiResponse){
                 is NetworkResult.Loading ->{
                     when(view){
@@ -39,7 +40,9 @@ class FoodJokeBinding {
                         is MaterialCardView->{
                             view.visibility = View.VISIBLE
                             if (db != null){
-                                view.visibility = View.INVISIBLE
+                                if (db.isEmpty()){
+                                    view.visibility = View.INVISIBLE
+                                }
                             }
                         }
                     }
