@@ -44,6 +44,7 @@ private val mainViewModel: MainViewModel): RecyclerView.Adapter<FavoriteRecipesA
 
         val currentRecipe = favRecipes[position]
         holder.bind(currentRecipe)
+        saveItemStateOnScroll(currentRecipe,holder)
 
         /**
          * Single Click Listener
@@ -75,6 +76,14 @@ private val mainViewModel: MainViewModel): RecyclerView.Adapter<FavoriteRecipesA
         }
     }
 
+    private fun saveItemStateOnScroll(currentRecipe:FavoritesEntity,holder:FavoriteRecipesHolder){
+        if (selectedRecipes.contains(currentRecipe)){
+            changeRecipeStyle(holder,R.color.cardBackgroundLightColor,R.color.colorPrimary)
+        }else {
+            changeRecipeStyle(holder,R.color.cardBackgroundColor,R.color.strokeColor)
+
+        }
+    }
     private fun applySelection(holder:FavoriteRecipesHolder,currentRecipe:FavoritesEntity){
         if (selectedRecipes.contains(currentRecipe)){
             selectedRecipes.remove(currentRecipe)
