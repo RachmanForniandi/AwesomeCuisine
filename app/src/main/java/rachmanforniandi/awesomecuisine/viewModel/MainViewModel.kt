@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity
@@ -17,9 +18,10 @@ import rachmanforniandi.awesomecuisine.repo.Repository
 import rachmanforniandi.awesomecuisine.util.NetworkResult
 import retrofit2.Response
 import java.lang.Exception
+import javax.inject.Inject
 
-
-class MainViewModel @ViewModelInject constructor(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     private val repository: Repository,
     application: Application
 ):AndroidViewModel(application) {

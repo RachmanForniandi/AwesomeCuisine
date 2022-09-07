@@ -1,11 +1,11 @@
 package rachmanforniandi.awesomecuisine.repo
 
-import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import rachmanforniandi.awesomecuisine.data.LocalDataSource
 import rachmanforniandi.awesomecuisine.data.RemoteDataSource
 import javax.inject.Inject
 
-@ActivityRetainedScoped
+@ViewModelScoped
 class Repository @Inject constructor(
     remoteDataSource: RemoteDataSource,
     localDataSource: LocalDataSource
