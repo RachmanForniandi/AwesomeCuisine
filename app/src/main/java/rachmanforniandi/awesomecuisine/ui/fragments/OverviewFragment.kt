@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import coil.load
+import kotlinx.android.synthetic.main.recipes_row_layout.*
 import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
+import rachmanforniandi.awesomecuisine.bindingAdapters.RecipesRowBinding
 import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
+import rachmanforniandi.awesomecuisine.databinding.RecipesRowLayoutBinding
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 
@@ -28,24 +33,33 @@ class OverviewFragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_overview, container, false)
 
         val args = arguments
-        val myBundle:Result? = args?.getParcelable(RECIPE_RESULT_KEY)
+        val myBundle:Result = args?.getParcelable<Result>(RECIPE_RESULT_KEY) as Result
 
-        binding.imgMainOverview.load(myBundle?.image)
-        binding.tvTitleRecipe.text = myBundle?.title
-        binding.tvLikes.text = myBundle?.aggregateLikes.toString()
-        binding.tvTime.text = myBundle?.readyInMinutes.toString()
+        binding.imgMainOverview.load(myBundle.image)
+        binding.tvTitleRecipe.text = myBundle.title
+        binding.tvLikes.text = myBundle.aggregateLikes.toString()
+        binding.tvTime.text = myBundle.readyInMinutes.toString()
         //binding.tvSummary.text = myBundle?.summary
-        myBundle?.summary.let {
+        /*myBundle?.summary.let {
             val summary = Jsoup.parse(it).text()
             binding.tvSummary.text = summary
-        }
+        }*/
+        RecipesRowBinding.parseHtml(binding.tvSummary,myBundle.summary)
 
-        if (myBundle?.vegetarian == true){
+        updateColors(myBundle.vegetarian, binding.tvVegetarian, binding.imgVegetarian)
+        updateColors(myBundle.vegan, binding.tvVegan, binding.imgVegan)
+        updateColors(myBundle.cheap, binding.tvCheap, binding.imgCheap)
+        updateColors(myBundle.dairyFree, binding.tvDairyFree, binding.imgDairyFree)
+        updateColors(myBundle.glutenFree, binding.tvGlutenFree, binding.imgGlutenFree)
+        updateColors(myBundle.veryHealthy, binding.tvHealthy, binding.imgHealthy)
+
+
+        if (myBundle.vegetarian == true){
             binding.imgVegetarian.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
             binding.tvVegetarian.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
         }
 
-        if (myBundle?.vegan == true){
+        /*if (myBundle?.vegan == true){
             binding.imgVegan.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
             binding.tvVegan.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
         }
@@ -69,8 +83,14 @@ class OverviewFragment : Fragment() {
             binding.imgCheap.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
             binding.tvCheap.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
         }
-
+*/
         return binding.root
     }
+    private fun updateColors(stateIsOn:Boolean,textView: TextView,imageView: ImageView){
+        if (stateIsOn){
+            imageView.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
+            textView.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
 
+        }
+    }
 }
