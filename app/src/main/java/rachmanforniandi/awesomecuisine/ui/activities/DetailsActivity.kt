@@ -12,7 +12,6 @@ import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_details.*
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.PagerAdapter
 import rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity
@@ -55,8 +54,9 @@ class DetailsActivity : AppCompatActivity() {
         val resultBundle = Bundle()
         resultBundle.putParcelable(RECIPE_RESULT_KEY,args.result)
 
-        var pagerAdapter = PagerAdapter(resultBundle,fragments,this)
+        val pagerAdapter = PagerAdapter(resultBundle,fragments,this)
 
+        binding.viewPagerDetails.isUserInputEnabled = false
         binding.viewPagerDetails.apply {
             adapter = pagerAdapter
         }
@@ -120,7 +120,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(detailsLayout,message,Snackbar.LENGTH_SHORT)
+        Snackbar.make(binding.detailsLayout,message,Snackbar.LENGTH_SHORT)
             .setAction("Okay"){}
             .show()
     }

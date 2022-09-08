@@ -9,12 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import coil.load
-import kotlinx.android.synthetic.main.recipes_row_layout.*
-import org.jsoup.Jsoup
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.bindingAdapters.RecipesRowBinding
 import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
-import rachmanforniandi.awesomecuisine.databinding.RecipesRowLayoutBinding
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 
