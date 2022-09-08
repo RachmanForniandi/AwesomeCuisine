@@ -17,10 +17,10 @@ class FoodJokeBinding {
         @JvmStatic
         fun setCardAndProgressVisibility(
             view: View,
-            apiResponse:NetworkResult<FoodJoke>?,
+            apiResponse:NetworkResult<FoodJoke>,
             db:List<FoodJokeEntity>?
         ){
-            when(apiResponse){
+            when (apiResponse){
                 is NetworkResult.Loading ->{
                     when(view){
                         is ProgressBar ->{
@@ -31,7 +31,6 @@ class FoodJokeBinding {
                         }
                     }
                 }
-
                 is NetworkResult.Error->{
                     when(view){
                         is ProgressBar ->{
