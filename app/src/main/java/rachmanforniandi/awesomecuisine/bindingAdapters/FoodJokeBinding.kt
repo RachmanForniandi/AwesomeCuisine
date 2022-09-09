@@ -17,9 +17,10 @@ class FoodJokeBinding {
         @JvmStatic
         fun setCardAndProgressVisibility(
             view: View,
-            apiResponse:NetworkResult<FoodJoke>?,
-            db:List<FoodJokeEntity>?){
-            when(apiResponse){
+            apiResponse:NetworkResult<FoodJoke>,
+            db:List<FoodJokeEntity>?
+        ){
+            when (apiResponse){
                 is NetworkResult.Loading ->{
                     when(view){
                         is ProgressBar ->{
@@ -30,7 +31,6 @@ class FoodJokeBinding {
                         }
                     }
                 }
-
                 is NetworkResult.Error->{
                     when(view){
                         is ProgressBar ->{
@@ -39,7 +39,9 @@ class FoodJokeBinding {
                         is MaterialCardView->{
                             view.visibility = View.VISIBLE
                             if (db != null){
-                                view.visibility = View.INVISIBLE
+                                if (db.isEmpty()){
+                                    view.visibility = View.INVISIBLE
+                                }
                             }
                         }
                     }

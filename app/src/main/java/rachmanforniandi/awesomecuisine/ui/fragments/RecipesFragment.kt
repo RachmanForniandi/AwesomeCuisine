@@ -10,11 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_recipes.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.RecipesAdapter
@@ -50,7 +47,7 @@ class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         //mView =inflater.inflate(R.layout.fragment_recipes, container, false)
         _binding = FragmentRecipesBinding.inflate(inflater, container, false)
@@ -67,7 +64,7 @@ class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
             recipesViewModel.backOnline = it
         })
 
-        lifecycleScope.launch {
+        lifecycleScope.launchWhenStarted {
             networkListener = NetworkListener()
             networkListener.checkNetworkAvailability(requireActivity())
                 .collect { status->
@@ -131,6 +128,7 @@ class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
                 is NetworkResult.Success->{
                     hideShimmerEffect()
                     response.data?.let { adapter.setData(it) }
+                    recipesViewModel.saveMealAndDietType()
                 }
                 is NetworkResult.Error->{
                     hideShimmerEffect()
@@ -183,23 +181,25 @@ class RecipesFragment : Fragment(),SearchView.OnQueryTextListener {
 
     private fun setupRecyclerviewRecipesData(){
         binding.listItemRecipe.adapter = adapter
-        binding.listItemRecipe.layoutManager = LinearLayoutManager(requireContext())
+        //binding.listItemRecipe.layoutManager = LinearLayoutManager(requireContext())
         showShimmerEffect()
     }
 
     private fun showShimmerEffect(){
-        binding.listItemRecipe.showShimmer()
+        binding.shimmerFrameLayout.startShimmer()
+        binding.shimmerFrameLayout.visibility = View.VISIBLE
+        binding.listItemRecipe.visibility = View.GONE
     }
 
     private fun hideShimmerEffect(){
-        binding.listItemRecipe.hideShimmer()
+        binding.shimmerFrameLayout.stopShimmer()
+        binding.shimmerFrameLayout.visibility = View.GONE
+        binding.listItemRecipe.visibility = View.VISIBLE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding =null
     }
-
-
 
 }

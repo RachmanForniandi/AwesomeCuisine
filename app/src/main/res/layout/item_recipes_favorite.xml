@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:strokeColor="@color/mediumGray"
+            app:strokeColor="@color/strokeColor"
             app:strokeWidth="1dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white">
+                android:background="@color/cardBackgroundColor">
 
                 <ImageView
                     android:id="@+id/img_Recipes_fav"
@@ -58,7 +58,7 @@
                     android:ellipsize="end"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/darker"
+                    android:textColor="@color/titleColor"
                     android:fontFamily="@font/courgette"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +76,7 @@
                     tools:text="@string/dummy_word"
                     android:maxLines="3"
                     android:ellipsize="end"
-                    android:textColor="@color/darkGray"
+                    android:textColor="@color/descriptionColor"
                     app:layout_constraintTop_toBottomOf="@id/txt_name_recipes_fav"
                     app:layout_constraintEnd_toEndOf="@id/txt_name_recipes_fav"
                     app:layout_constraintStart_toStartOf="@id/txt_name_recipes_fav"/>
@@ -99,7 +99,7 @@
                     android:id="@+id/heart_txt_value_fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    setNumberOfLikes="@{favoritesEntity.result.aggregateLikes}"
+                    android:text="@{String.valueOf(favoritesEntity.result.aggregateLikes)}"
                     app:layout_constraintStart_toStartOf="@id/txt_description_recipe_fav"
                     app:layout_constraintTop_toBottomOf="@id/img_heart_fav"
                     android:textAlignment="center"
@@ -123,7 +123,7 @@
                     android:id="@+id/clock_txt_value_fav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    setNumberOfMinutes="@{favoritesEntity.result.readyInMinutes}"
+                    android:text="@{String.valueOf(favoritesEntity.result.readyInMinutes)}"
                     android:layout_marginStart="24dp"
                     app:layout_constraintStart_toEndOf="@id/heart_txt_value_fav"
                     app:layout_constraintTop_toBottomOf="@id/img_clock"

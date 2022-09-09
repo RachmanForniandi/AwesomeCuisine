@@ -4,16 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_details.*
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.PagerAdapter
 import rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity
@@ -29,6 +27,7 @@ class DetailsActivity : AppCompatActivity() {
     private val args by navArgs<DetailsActivityArgs>()
     private val mainViewModel:MainViewModel by viewModels()
     private lateinit var binding:ActivityDetailsBinding
+    private lateinit var menuItem:MenuItem
 
     private var recipeSaved = false
     private var savedRecipeId = 0
@@ -36,7 +35,6 @@ class DetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
-        //setContentView(R.layout.activity_details)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbarDetails)
@@ -56,15 +54,23 @@ class DetailsActivity : AppCompatActivity() {
         val resultBundle = Bundle()
         resultBundle.putParcelable(RECIPE_RESULT_KEY,args.result)
 
-        val adapter = PagerAdapter(resultBundle,fragments,titles,supportFragmentManager)
-        binding.viewPagerDetails.adapter = adapter
-        binding.tabLayoutDetails.setupWithViewPager(binding.viewPagerDetails)
+        val pagerAdapter = PagerAdapter(resultBundle,fragments,this)
+
+        binding.viewPagerDetails.isUserInputEnabled = false
+        binding.viewPagerDetails.apply {
+            adapter = pagerAdapter
+        }
+
+        TabLayoutMediator(binding.tabLayoutDetails,binding.viewPagerDetails){ tab,position->
+            tab.text = titles[position]
+
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?):Boolean {
         menuInflater.inflate(R.menu.details_menu, menu)
-        val menuItem = menu?.findItem(R.id.save_to_favorites_menu)
-        menuItem?.let { checkSavedRecipes(it) }
+        menuItem = menu!!.findItem(R.id.save_to_favorites_menu)
+        menuItem.let { checkSavedRecipes(it) }
         return true
     }
 
@@ -88,7 +94,7 @@ class DetailsActivity : AppCompatActivity() {
                         savedRecipeId = savedRecipe.id
                         recipeSaved = true
                     }else{
-                        changeMenuItemColor(item,R.color.white)
+                        //changeMenuItemColor(item,R.color.white)
                     }
                 }
             }catch (e:Exception){
@@ -114,7 +120,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(detailsLayout,message,Snackbar.LENGTH_SHORT)
+        Snackbar.make(binding.detailsLayout,message,Snackbar.LENGTH_SHORT)
             .setAction("Okay"){}
             .show()
     }
@@ -123,5 +129,8 @@ class DetailsActivity : AppCompatActivity() {
         item.icon.setTint(ContextCompat.getColor(this,color))
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        changeMenuItemColor(menuItem,R.color.white)
+    }
 }

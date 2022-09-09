@@ -2,12 +2,11 @@ package rachmanforniandi.awesomecuisine.viewModel
 
 import android.app.Application
 import android.widget.Toast
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import rachmanforniandi.awesomecuisine.data.DataStoreRepository
 import rachmanforniandi.awesomecuisine.data.MealAndDietType
@@ -22,13 +21,16 @@ import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_FILL_INGRE
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_NUMBER
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_SEARCH
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.QUERY_TYPE
+import javax.inject.Inject
 
-class RecipesViewModel @ViewModelInject constructor(application: Application,
-                                                    private val dataStoreRepository: DataStoreRepository
+@HiltViewModel
+class RecipesViewModel @Inject constructor(application: Application,
+                                           private val dataStoreRepository: DataStoreRepository
                                                     ) : AndroidViewModel(application) {
 
-    private var mealType = DEFAULT_MEAL_TYPE
-    private var dietType = DEFAULT_DIET_TYPE
+    /*private var mealType = DEFAULT_MEAL_TYPE
+    private var dietType = DEFAULT_DIET_TYPE*/
+    private lateinit var mealAndDiet:MealAndDietType
 
     var networkStatus = false
     var backOnline = false
@@ -36,10 +38,18 @@ class RecipesViewModel @ViewModelInject constructor(application: Application,
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
     var readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
 
-    fun saveMealAndDietType(mealType:String, mealTypeId:Int, dietType: String, dietTypeId:Int) =
+    fun saveMealAndDietType() =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveMealAndDietType(mealType, mealTypeId, dietType, dietTypeId)
+            dataStoreRepository.saveMealAndDietType(
+                mealAndDiet.selectedMealType,
+                mealAndDiet.selectedMealTypeId,
+                mealAndDiet.selectedDietType,
+                mealAndDiet.selectedDietTypeId)
         }
+
+    fun saveMealAndDietTypeTemp(mealType:String, mealTypeId:Int, dietType: String, dietTypeId:Int) {
+        mealAndDiet = MealAndDietType(mealType,mealTypeId,dietType,dietTypeId)
+    }
 
     fun saveBackOnline(backOnline:Boolean)=
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,20 +58,29 @@ class RecipesViewModel @ViewModelInject constructor(application: Application,
 
     fun applyQueries():HashMap<String,String>{
 
-        viewModelScope.launch {
+        /*viewModelScope.launch {
             readMealAndDietType.collect { value->
                 mealType = value.selectedMealType
                 dietType = value.selectedDietType
 
             }
-        }
+        }*/
         val queries:HashMap<String,String> = HashMap()
+
         queries[QUERY_NUMBER]= DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY]= Constants.API_KEY
-        queries[QUERY_TYPE]=mealType
-        queries[QUERY_DIET]=dietType
+        /*queries[QUERY_TYPE]=mealAndDiet.selectedMealType
+        queries[QUERY_DIET]=mealAndDiet.selectedDietType*/
         queries[QUERY_ADD_RECIPE_INFORMATION]="true"
         queries[QUERY_FILL_INGREDIENTS]="true"
+
+        if (this@RecipesViewModel::mealAndDiet.isInitialized) {
+            queries[QUERY_TYPE] = mealAndDiet.selectedMealType
+            queries[QUERY_DIET] = mealAndDiet.selectedDietType
+        } else {
+            queries[QUERY_TYPE] = DEFAULT_MEAL_TYPE
+            queries[QUERY_DIET] = DEFAULT_DIET_TYPE
+        }
         return queries
     }
 
@@ -70,8 +89,8 @@ class RecipesViewModel @ViewModelInject constructor(application: Application,
         queries[QUERY_SEARCH] = searchQuery
         queries[QUERY_NUMBER]= DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY]= Constants.API_KEY
-        queries[QUERY_TYPE]=mealType
-        queries[QUERY_DIET]=dietType
+        /*queries[QUERY_TYPE]=mealAndDiet.selectedMealType
+        queries[QUERY_DIET]=mealAndDiet.selectedDietType*/
         queries[QUERY_ADD_RECIPE_INFORMATION]="true"
         queries[QUERY_FILL_INGREDIENTS]="true"
         return queries

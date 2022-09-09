@@ -2,7 +2,6 @@ package rachmanforniandi.awesomecuisine.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.databinding.FragmentRecipesBottomSheetBinding
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.DEFAULT_DIET_TYPE
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.DEFAULT_MEAL_TYPE
@@ -23,7 +21,8 @@ import java.util.*
 
 class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
 
-    private lateinit var binding: FragmentRecipesBottomSheetBinding
+    private var binding: FragmentRecipesBottomSheetBinding? = null
+    private val bind get() = binding!!
     private lateinit var recipesViewModel: RecipesViewModel
 
     private var mealTypeChip = DEFAULT_MEAL_TYPE
@@ -40,7 +39,7 @@ class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentRecipesBottomSheetBinding.inflate(inflater,container,false)
         //return inflater.inflate(R.layout.fragment_recipes_bottom_sheet, container, false)
@@ -49,45 +48,54 @@ class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
             value->
             mealTypeChip = value.selectedMealType
             dietTypeChip = value.selectedDietType
-            updateChip(value.selectedMealTypeId,binding.mealTypeChipGroup)
-            updateChip(value.selectedDietTypeId,binding.dietTypeChipGroup)
+            updateChip(value.selectedMealTypeId,bind.mealTypeChipGroup)
+            updateChip(value.selectedDietTypeId,bind.dietTypeChipGroup)
         })
 
-        binding.mealTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
+        bind.mealTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
             val chip = group.findViewById<Chip>(selectedChipId)
             val selectedMealType = chip.text.toString().lowercase(Locale.ROOT)
             mealTypeChip = selectedMealType
             mealTypeChipId = selectedChipId
         }
 
-        binding.dietTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
+        bind.dietTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
             val chip2 = group.findViewById<Chip>(selectedChipId)
             val selectedDietType = chip2.text.toString().lowercase(Locale.ROOT)
             dietTypeChip = selectedDietType
             dietTypeChipId = selectedChipId
         }
 
-        binding.btnApply.setOnClickListener {
-            recipesViewModel.saveMealAndDietType(
+        bind.btnApply.setOnClickListener {
+            recipesViewModel.saveMealAndDietTypeTemp(
                 mealTypeChip,mealTypeChipId,dietTypeChip,dietTypeChipId
             )
             val action = RecipesBottomSheetFragmentDirections.actionRecipesBottomSheetFragmentToRecipesFragment(true)
             findNavController().navigate(action)
         }
 
-        return binding.root
+        return bind.root
     }
 
     private fun updateChip(chipId: Int, chipGroup: ChipGroup) {
         if (chipId != 0){
             try {
-                chipGroup.findViewById<Chip>(chipId).isChecked = true
+                val targetView =chipGroup.findViewById<Chip>(chipId)
+                targetView.isChecked = true
+                chipGroup.requestChildFocus(targetView,targetView)
             }catch (e:Exception){
                 Log.d("RecipeBottomSheet",e.message.toString())
             }
         }
 
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
+
 
 
 }

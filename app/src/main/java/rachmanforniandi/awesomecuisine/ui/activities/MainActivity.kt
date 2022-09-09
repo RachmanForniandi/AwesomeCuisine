@@ -8,16 +8,21 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 import rachmanforniandi.awesomecuisine.R
+import rachmanforniandi.awesomecuisine.databinding.ActivityMainBinding
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityMainBinding
+
     private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setTheme(R.style.Theme_AwesomeCuisine)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         navController = findNavController(R.id.navHostFragment)
         val appBarConfiguration= AppBarConfiguration(setOf(
@@ -26,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             R.id.foodJokeFragment
         ))
 
-        bottom_navigation_main.setupWithNavController(navController)
+        binding.bottomNavigationMain.setupWithNavController(navController)
         setupActionBarWithNavController(navController,appBarConfiguration)
 
     }
