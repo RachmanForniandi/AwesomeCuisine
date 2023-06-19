@@ -10,29 +10,35 @@ import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.databinding.FragmentInstructionsBinding
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.util.Constants
+import rachmanforniandi.awesomecuisine.util.retrieveParcelable
 
 
 class InstructionsFragment : Fragment() {
-    private lateinit var binding:FragmentInstructionsBinding
+    private var _binding:FragmentInstructionsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentInstructionsBinding.inflate(inflater,container,false)
+        _binding = FragmentInstructionsBinding.inflate(inflater,container,false)
 
         val args = arguments
-        val myBundle: Result? = args?.getParcelable(Constants.RECIPE_RESULT_KEY)
+        val myBundle: Result? = args?.retrieveParcelable(Constants.RECIPE_RESULT_KEY)
 
-        binding.instructionsWv.webViewClient = object : WebViewClient() {}
-        val webUrl:String = myBundle!!.sourceUrl
-        binding.instructionsWv.loadUrl(webUrl)
-
+        if (myBundle != null){
+            binding.instructionsWv.webViewClient = object : WebViewClient() {}
+            val webUrl:String = myBundle.sourceUrl
+            binding.instructionsWv.loadUrl(webUrl)
+        }
 
         return binding.root
+    }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

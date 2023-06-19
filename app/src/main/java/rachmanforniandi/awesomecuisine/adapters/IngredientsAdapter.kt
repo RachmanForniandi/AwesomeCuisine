@@ -10,6 +10,7 @@ import rachmanforniandi.awesomecuisine.databinding.ItemIngredientsBinding
 import rachmanforniandi.awesomecuisine.models.ExtendedIngredient
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.BASE_IMAGE_URL
 import rachmanforniandi.awesomecuisine.util.RecipesDiffUtil
+import java.util.Locale
 
 class IngredientsAdapter:RecyclerView.Adapter<IngredientsAdapter.IngredientsHolder>() {
 
@@ -31,12 +32,14 @@ class IngredientsAdapter:RecyclerView.Adapter<IngredientsAdapter.IngredientsHold
 
     override fun onBindViewHolder(holder: IngredientsHolder, position: Int) {
         val ingredient = ingredientsList[position]
-        holder.txtOfIngredientsName.text = ingredient.name
+        holder.txtOfIngredientsName.text = ingredient.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
+            Locale.ROOT) else it.toString() }
         holder.txtOfIngredientsAmount.text = ingredient.amount.toString()
         holder.txtOfIngredientsUnit.text = ingredient.unit
         holder.txtOfIngredientsConsistency.text = ingredient.consistency
         holder.txtOfIngredientsOriginal.text = ingredient.original
-        holder.imageOfIngredients.load(BASE_IMAGE_URL + ingredientsList[position].image){
+        holder.imageOfIngredients.load(
+            BASE_IMAGE_URL + ingredientsList[position].image){
             crossfade(600)
             error(R.drawable.ic_error_placeholder)
         }

@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,48 +33,73 @@ class FoodJokeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentFoodJokeBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.mainViewModel = mainViewModel
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.food_joke_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                if (menuItem.itemId == R.id.share_food_joke_menu){
+                    val shareIntent = Intent().apply{
+                        this.action = Intent.ACTION_SEND
+                        this.putExtra(Intent.EXTRA_TEXT,foodJoke)
+                        this.type="text/plain"
+                    }
+                    startActivity(shareIntent)
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         mainViewModel.getFoodJoke(API_KEY)
-        mainViewModel.foodJokeResponse.observe(viewLifecycleOwner,{ response->
-            when(response){
-                is NetworkResult.Success->{
+        mainViewModel.foodJokeResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
                     binding.tvFoodJoke.text = response.data?.text
-                    if(response.data != null){
+                    if (response.data != null) {
                         foodJoke = response.data.text
                     }
                 }
-                is NetworkResult.Error->{
+
+                is NetworkResult.Error -> {
                     loadDataFromCache()
-                    Toast.makeText(requireActivity(),response.message.toString(),
-                    Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireActivity(), response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                is NetworkResult.Loading->{
-                    Log.d("FoodJokeFragment","Loading")
+
+                is NetworkResult.Loading -> {
+                    Log.d("FoodJokeFragment", "Loading")
                 }
             }
 
-        })
+        }
         return binding.root
     }
 
     private fun loadDataFromCache(){
         lifecycleScope.launch {
-            mainViewModel.readFoodJokeLocal.observe(viewLifecycleOwner,{database->
-                if (!database.isNullOrEmpty()){
+            mainViewModel.readFoodJokeLocal.observe(viewLifecycleOwner) { database ->
+                if (!database.isNullOrEmpty()) {
                     binding.tvFoodJoke.text = database[0].foodJoke.text
                     foodJoke = database[0].foodJoke.text
                 }
-            })
+            }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.food_joke_menu,menu)
     }
 
@@ -85,7 +113,7 @@ class FoodJokeFragment : Fragment() {
             startActivity(shareIntent)
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

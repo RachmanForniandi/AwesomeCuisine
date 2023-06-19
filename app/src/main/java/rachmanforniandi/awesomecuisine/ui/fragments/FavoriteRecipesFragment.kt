@@ -2,8 +2,11 @@ package rachmanforniandi.awesomecuisine.ui.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +33,23 @@ class FavoriteRecipesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
         binding.mAdapter = mAdapter
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.favorite_recipes_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                if (menuItem.itemId == R.id.deleteAll_favorite_recipes_menu){
+                    mainViewModel.deleteAllFavoriteRecipesData()
+                    showSnackBar()
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
         setupRecyclerFav(binding.listFavoriteRecipe)
         /*mainViewModel.readFavoriteRecipes.observe(viewLifecycleOwner,{ favoritesEntity->
             mAdapter.setData(favoritesEntity)
@@ -42,17 +62,17 @@ class FavoriteRecipesFragment : Fragment() {
         listFavorite.adapter = mAdapter
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.favorite_recipes_menu,menu)
-    }
+    }*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.deleteAll_favorite_recipes_menu){
             mainViewModel.deleteAllFavoriteRecipesData()
             showSnackBar()
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
     private fun showSnackBar(){
         Snackbar.make(
             binding.root,

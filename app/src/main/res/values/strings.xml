@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AwesomeCuisine</string>
+    <string name="app_name">Foody</string>
     <string name="recipes_fragment">Recipes</string>
     <string name="favorite_recipes_fragment">Favorites</string>
     <string name="food_joke_fragment">Food Joke</string>

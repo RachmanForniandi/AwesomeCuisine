@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Parcelable
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ class MainViewModel @Inject constructor(
     application: Application
 ):AndroidViewModel(application) {
 
+    var recyclerViewState: Parcelable? = null
 
     /** Room Db*/
     val readRecipesLocal: LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
@@ -166,7 +168,7 @@ class MainViewModel @Inject constructor(
             response.code() == 402 ->{
                 return NetworkResult.Error("API Key Limited.")
             }
-            response.body()?.results.isNullOrEmpty() ->{
+            response.body()!!.results.isEmpty() ->{
                 val recipesData = response.body()
                 return NetworkResult.Success(recipesData)
             }

@@ -11,6 +11,7 @@ import rachmanforniandi.awesomecuisine.databinding.FragmentIngredientsBinding
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.util.Constants
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
+import rachmanforniandi.awesomecuisine.util.retrieveParcelable
 
 
 class IngredientsFragment : Fragment() {
@@ -25,7 +26,7 @@ class IngredientsFragment : Fragment() {
         binding = FragmentIngredientsBinding.inflate(inflater,container,false)
 
         val args = arguments
-        val myBundle: Result? = args?.getParcelable(RECIPE_RESULT_KEY)
+        val myBundle: Result? = args?.retrieveParcelable(RECIPE_RESULT_KEY)
         binding.listIngredients.adapter = adapter
         myBundle?.extendedIngredients?.let { adapter.setData(it) }
 

@@ -12,6 +12,7 @@ import androidx.navigation.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import rachmanforniandi.awesomecuisine.R
 import rachmanforniandi.awesomecuisine.adapters.PagerAdapter
 import rachmanforniandi.awesomecuisine.data.database.entities.FavoritesEntity
@@ -22,6 +23,8 @@ import rachmanforniandi.awesomecuisine.ui.fragments.OverviewFragment
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
 import rachmanforniandi.awesomecuisine.viewModel.MainViewModel
 
+
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     private val args by navArgs<DetailsActivityArgs>()
@@ -67,7 +70,7 @@ class DetailsActivity : AppCompatActivity() {
         }.attach()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?):Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.details_menu, menu)
         menuItem = menu!!.findItem(R.id.save_to_favorites_menu)
         menuItem.let { checkSavedRecipes(it) }
@@ -126,7 +129,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun changeMenuItemColor(item: MenuItem, color: Int) {
-        item.icon.setTint(ContextCompat.getColor(this,color))
+        item.icon?.setTint(ContextCompat.getColor(this,color))
     }
 
     override fun onDestroy() {

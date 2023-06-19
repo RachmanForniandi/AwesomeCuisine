@@ -14,6 +14,7 @@ import rachmanforniandi.awesomecuisine.bindingAdapters.RecipesRowBinding
 import rachmanforniandi.awesomecuisine.databinding.FragmentOverviewBinding
 import rachmanforniandi.awesomecuisine.models.Result
 import rachmanforniandi.awesomecuisine.util.Constants.Companion.RECIPE_RESULT_KEY
+import rachmanforniandi.awesomecuisine.util.retrieveParcelable
 
 
 class OverviewFragment : Fragment() {
@@ -30,28 +31,31 @@ class OverviewFragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_overview, container, false)
 
         val args = arguments
-        val myBundle:Result = args?.getParcelable<Result>(RECIPE_RESULT_KEY) as Result
+        val myBundle:Result? = args?.retrieveParcelable<Result>(RECIPE_RESULT_KEY) as Result?
 
-        binding.imgMainOverview.load(myBundle.image)
-        binding.tvTitleRecipe.text = myBundle.title
-        binding.tvLikes.text = myBundle.aggregateLikes.toString()
-        binding.tvTime.text = myBundle.readyInMinutes.toString()
-        //binding.tvSummary.text = myBundle?.summary
-        /*myBundle?.summary.let {
-            val summary = Jsoup.parse(it).text()
-            binding.tvSummary.text = summary
-        }*/
-        RecipesRowBinding.parseHtml(binding.tvSummary,myBundle.summary)
+        if (myBundle != null){
+            binding.imgMainOverview.load(myBundle.image)
+            binding.tvTitleRecipe.text = myBundle.title
+            binding.tvLikes.text = myBundle.aggregateLikes.toString()
+            binding.tvTime.text = myBundle.readyInMinutes.toString()
+            //binding.tvSummary.text = myBundle?.summary
+            /*myBundle?.summary.let {
+                val summary = Jsoup.parse(it).text()
+                binding.tvSummary.text = summary
+            }*/
+            RecipesRowBinding.parseHtml(binding.tvSummary,myBundle.summary)
 
-        updateColors(myBundle.vegetarian, binding.tvVegetarian, binding.imgVegetarian)
-        updateColors(myBundle.vegan, binding.tvVegan, binding.imgVegan)
-        updateColors(myBundle.cheap, binding.tvCheap, binding.imgCheap)
-        updateColors(myBundle.dairyFree, binding.tvDairyFree, binding.imgDairyFree)
-        updateColors(myBundle.glutenFree, binding.tvGlutenFree, binding.imgGlutenFree)
-        updateColors(myBundle.veryHealthy, binding.tvHealthy, binding.imgHealthy)
+            updateColors(myBundle.vegetarian, binding.tvVegetarian, binding.imgVegetarian)
+            updateColors(myBundle.vegan, binding.tvVegan, binding.imgVegan)
+            updateColors(myBundle.cheap, binding.tvCheap, binding.imgCheap)
+            updateColors(myBundle.dairyFree, binding.tvDairyFree, binding.imgDairyFree)
+            updateColors(myBundle.glutenFree, binding.tvGlutenFree, binding.imgGlutenFree)
+            updateColors(myBundle.veryHealthy, binding.tvHealthy, binding.imgHealthy)
+
+        }
 
 
-        if (myBundle.vegetarian == true){
+        if (myBundle?.vegetarian == true){
             binding.imgVegetarian.setColorFilter(ContextCompat.getColor(requireActivity(),R.color.green))
             binding.tvVegetarian.setTextColor(ContextCompat.getColor(requireActivity(),R.color.green))
         }

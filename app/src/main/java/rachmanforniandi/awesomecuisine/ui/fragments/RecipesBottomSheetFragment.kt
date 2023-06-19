@@ -32,7 +32,7 @@ class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        recipesViewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java)
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
 
     }
 
@@ -44,15 +44,14 @@ class RecipesBottomSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentRecipesBottomSheetBinding.inflate(inflater,container,false)
         //return inflater.inflate(R.layout.fragment_recipes_bottom_sheet, container, false)
 
-        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner,{
-            value->
+        recipesViewModel.readMealAndDietType.asLiveData().observe(viewLifecycleOwner) { value ->
             mealTypeChip = value.selectedMealType
             dietTypeChip = value.selectedDietType
-            updateChip(value.selectedMealTypeId,bind.mealTypeChipGroup)
-            updateChip(value.selectedDietTypeId,bind.dietTypeChipGroup)
-        })
+            updateChip(value.selectedMealTypeId, bind.mealTypeChipGroup)
+            updateChip(value.selectedDietTypeId, bind.dietTypeChipGroup)
+        }
 
-        bind.mealTypeChipGroup.setOnCheckedChangeListener { group, selectedChipId ->
+        bind.mealTypeChipGroup.setOnCheckedChangeListener(){ group, selectedChipId ->
             val chip = group.findViewById<Chip>(selectedChipId)
             val selectedMealType = chip.text.toString().lowercase(Locale.ROOT)
             mealTypeChip = selectedMealType
